@@ -100,7 +100,7 @@ app.get('/google-home-notifier', function (req, res) {
 
 // ngrokを非同期で起動
 async function connectNgrok() {
-    let url = await ngrok.connect({addr:serverPort,authtoken: process.env.TOKEN,auth: `${process.env.AUTH_USER}:${process.env.AUTH_PASSWORD}`});
+    let url = await ngrok.connect({addr:serverPort,authtoken: process.env.TOKEN});
     return url;
 }
 
