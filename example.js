@@ -3,10 +3,12 @@ var googlehome = require('./google-home-notifier');
 var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
+require('dotenv').config();
 const serverPort = 8091; // default port
 
-var deviceName = 'Google Home';
-var ip = '192.168.1.20'; // default IP
+var deviceName = 'リビングルーム';
+//var ip = '192.168.1.20'; // default IP
+var ip = process.env.DEVICE_IP; // default IP
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -21,13 +23,14 @@ app.post('/google-home-notifier', urlencodedParser, function (req, res) {
      ip = req.query.ip;
   }
 
-  var language = 'pl'; // default language code
+  var language = 'ja'; // default language code
   if (req.query.language) {
     language;
   }
 
+  console.log(ip);
   googlehome.ip(ip, language);
-  googlehome.device(deviceName,language);
+  //googlehome.device(deviceName,language);
 
   if (text){
     try {
@@ -63,7 +66,7 @@ app.get('/google-home-notifier', function (req, res) {
      ip = req.query.ip;
   }
 
-  var language = 'pl'; // default language code
+  var language = 'ja'; // default language code
   if (req.query.language) {
     language;
   }
@@ -95,14 +98,31 @@ app.get('/google-home-notifier', function (req, res) {
   }
 })
 
+// ngrokを非同期で起動
+async function connectNgrok() {
+    let url = await ngrok.connect(serverPort);
+    return url;
+}
+
 app.listen(serverPort, function () {
-  ngrok.connect(serverPort, function (err, url) {
+  console.log('linsten done');
+  connectNgrok().then(url => {
+    console.log('URL : ' + url);
     console.log('Endpoints:');
-    console.log('    http://' + ip + ':' + serverPort + '/google-home-notifier');
     console.log('    ' + url + '/google-home-notifier');
     console.log('GET example:');
     console.log('curl -X GET ' + url + '/google-home-notifier?text=Hello+Google+Home');
-	console.log('POST example:');
-	console.log('curl -X POST -d "text=Hello Google Home" ' + url + '/google-home-notifier');
+    console.log('POST example:');
+    console.log('curl -X POST -d "text=Hello Google Home" ' + url + '/google-home-notifier');
   });
+  //const url = await ngrok.connect(serverPort, function (err, url) {
+  //  console.log(err);
+  //  console.log('Endpoints:');
+  //  console.log('    http://' + ip + ':' + serverPort + '/google-home-notifier');
+  //  console.log('    ' + url + '/google-home-notifier');
+  //  console.log('GET example:');
+  //  console.log('curl -X GET ' + url + '/google-home-notifier?text=Hello+Google+Home');
+  //  console.log('POST example:');
+  //  console.log('curl -X POST -d "text=Hello Google Home" ' + url + '/google-home-notifier');
+  //});
 })
