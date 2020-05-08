@@ -108,15 +108,15 @@ async function connectNgrok() {
 
 app.listen(serverPort, function () {
   console.log('linsten done');
-  connectNgrok().then(url => {
-    console.log('URL : ' + url);
-    console.log('Endpoints:');
-    console.log('    ' + url + '/google-home-notifier');
-    console.log('GET example:');
-    console.log('curl -X GET ' + url + '/google-home-notifier?text=Hello+Google+Home');
-    console.log('POST example:');
-    console.log('curl -X POST -d "text=Hello Google Home" ' + url + '/google-home-notifier');
-  });
+  // connectNgrok().then(url => {
+  //   console.log('URL : ' + url);
+  //   console.log('Endpoints:');
+  //   console.log('    ' + url + '/google-home-notifier');
+  //   console.log('GET example:');
+  //   console.log('curl -X GET ' + url + '/google-home-notifier?text=Hello+Google+Home');
+  //   console.log('POST example:');
+  //   console.log('curl -X POST -d "text=Hello Google Home" ' + url + '/google-home-notifier');
+  // });
   //const url = await ngrok.connect(serverPort, function (err, url) {
   //  console.log(err);
   //  console.log('Endpoints:');
