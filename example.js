@@ -8,6 +8,11 @@ var app = express();
 require('dotenv').config({ path: `${appRoot.path}/.env` });
 const serverPort = 8091; // default port
 
+const basicAuth = require('express-basic-auth')
+
+app.use(basicAuth({
+  users: { [process.env.AUTH_USER]: process.env.AUTH_PASSWORD }
+}));
 var deviceName = 'リビングルーム';
 //var ip = '192.168.1.20'; // default IP
 var ip = process.env.DEVICE_IP; // default IP
