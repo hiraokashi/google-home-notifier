@@ -13,9 +13,9 @@ const basicAuth = require('express-basic-auth')
 app.use(basicAuth({
   users: { [process.env.AUTH_USER]: process.env.AUTH_PASSWORD }
 }));
-var deviceName = 'リビングルーム';
+var deviceName = process.env.DEVICE_NAME;
 //var ip = '192.168.1.20'; // default IP
-var ip = process.env.DEVICE_IP; // default IP
+//var ip = process.env.DEVICE_IP; // default IP
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -36,8 +36,8 @@ app.post('/google-home-notifier', urlencodedParser, function (req, res) {
   }
 
   console.log(ip);
-  googlehome.ip(ip, language);
-  //googlehome.device(deviceName,language);
+  //googlehome.ip(ip, language);
+  googlehome.device(deviceName,language);
 
   if (text){
     try {
@@ -78,7 +78,7 @@ app.get('/google-home-notifier', function (req, res) {
     language;
   }
 
-  googlehome.ip(ip, language);
+  //googlehome.ip(ip, language);
   googlehome.device(deviceName,language);
 
   if (text) {
