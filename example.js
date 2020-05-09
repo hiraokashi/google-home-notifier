@@ -18,6 +18,7 @@ var deviceName = process.env.DEVICE_NAME;
 //var ip = process.env.DEVICE_IP; // default IP
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+console.log(deviceName);
 
 app.post('/google-home-notifier', urlencodedParser, function (req, res) {
   
@@ -35,7 +36,7 @@ app.post('/google-home-notifier', urlencodedParser, function (req, res) {
     language;
   }
 
-  console.log(ip);
+  console.log(deviceName);
   //googlehome.ip(ip, language);
   googlehome.device(deviceName,language);
 
