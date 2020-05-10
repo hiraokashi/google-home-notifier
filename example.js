@@ -6,11 +6,12 @@ var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
 require('dotenv').config({ path: `${appRoot.path}/.env` });
-const serverPort = 8091; // default port
+const serverPort = process.env.PORT; // default port
 
 const basicAuth = require('express-basic-auth')
 
 app.use(basicAuth({
+  challenge: true,
   users: { [process.env.AUTH_USER]: process.env.AUTH_PASSWORD }
 }));
 var deviceName = process.env.DEVICE_NAME;
